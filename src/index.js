@@ -8,7 +8,8 @@ function convert(csvString) {
   }, {}))
 
   return tideJson.map(tideRow => ({
-    Date: toDDMMYYYY(new Date(tideRow.Date))
+    Date: toDDMMYYYY(new Date(tideRow.Date)),
+    'Transaction description': tideRow['Transaction description']
   }))
 }
 
