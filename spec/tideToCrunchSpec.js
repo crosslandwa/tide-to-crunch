@@ -15,7 +15,7 @@ describe('tide-to-crunch', () => {
     expect(result[1]['Transaction description']).toEqual('ref 2')
   })
 
-  it('plucks "Amount" values from the Tide CSV', () => {
+  it('plucks "Amount" values from the Tide CSV and converts them to 2d.p. floats', () => {
     const csv = '"Amount"\n"123.00"\n"321.50"'
     result = convert(csv)
     expect(result[0].Amount).toEqual(123.00)
