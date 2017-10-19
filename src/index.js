@@ -8,6 +8,7 @@ function convert(csvString) {
   }, {}))
 
   return tideJson.map(tideRow => ({
+    Amount: parseFloat(parseFloat(tideRow.Amount).toFixed(2)),
     Date: toDDMMYYYY(new Date(tideRow.Date)),
     'Transaction description': tideRow['Transaction description']
   }))
