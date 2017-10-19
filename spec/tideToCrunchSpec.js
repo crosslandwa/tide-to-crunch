@@ -22,4 +22,17 @@ describe('tide-to-crunch', () => {
     expect(result[1].Amount).toEqual(321.50)
   })
 
+  it('takes a final balance and calculates the balance after each transaction', () => {
+    const csv = '"Amount"\n"500.00"\n"-200.00"\n"1000.00'
+    result = convertToCrunchJson(csv, 10000)
+    expect(result[0].Amount).toEqual(500.00)
+    expect(result[0].Balance).toEqual(10000.00)
+
+    expect(result[1].Amount).toEqual(-200.00)
+    expect(result[1].Balance).toEqual(9500.00)
+
+    expect(result[2].Amount).toEqual(1000.00)
+    expect(result[2].Balance).toEqual(9700.00)
+  })
+
 })
