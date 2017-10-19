@@ -1,0 +1,22 @@
+{
+  "name": "tide-to-crunch",
+  "version": "1.0.0",
+  "description": "Convert tide csv to crunch csv",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint *.js **/*.js",
+    "test": "jasmine",
+    "start": "node src/index.js"
+  },
+  "author": "https://github.com/crosslandwa",
+  "license": "ISC",
+  "dependencies": {
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jasmine": "^2.9.1",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jasmine": "^2.8.0"
+  }
+}
