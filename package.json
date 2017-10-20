@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint *.js **/*.js",
     "test": "jasmine",
-    "start": "node src/index.js"
+    "start": "node index.js"
   },
   "author": "https://github.com/crosslandwa",
   "license": "ISC",
