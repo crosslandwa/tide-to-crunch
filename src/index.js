@@ -1,4 +1,6 @@
 const fs = require('fs')
+const toPence = pounds => Math.round(pounds * 100)
+const toPounds = pence => pence / 100
 
 function convertToCrunchJson(csvString, finalBalance = 0) {
   const csvLines = csvString.split('\n')
@@ -10,16 +12,22 @@ function convertToCrunchJson(csvString, finalBalance = 0) {
     return acc
   }, {}))
 
-  return addBalance(tideJson.map(tideRow => ({
-    Amount: parseFloat(parseFloat(tideRow.Amount).toFixed(2)),
-    Date: toDDMMYYYY(new Date(tideRow.Date)),
-    'Transaction description': tideRow['Transaction description']
-  })), finalBalance)
+  return addBalance(
+    tideJson.map(tideRow => ({
+      Amount: parseFloat(parseFloat(tideRow.Amount).toFixed(2)),
+      Date: toDDMMYYYY(new Date(tideRow.Date)),
+      'Transaction description': tideRow['Transaction description']
+    })),
+    parseFloat(finalBalance)
+  )
 }
 
 function addBalance (payments, finalBalance) {
-  const balances = payments.reduce((acc, payment) => acc.concat(parseFloat(acc.slice(-1)) - payment.Amount), [parseFloat(finalBalance)])
-  return payments.map((payment, index) => Object.assign({}, payment, { Balance: balances[index] }))
+  const balances = payments.reduce((acc, payment) =>
+    acc.concat(acc.slice(-1) - toPence(payment.Amount)),
+    [toPence(finalBalance)]
+  )
+  return payments.map((payment, index) => Object.assign({}, payment, { Balance: toPounds(balances[index]) }))
 }
 
 function parseCsvLine (raw) {
