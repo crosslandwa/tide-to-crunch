@@ -11,6 +11,7 @@
   "author": "https://github.com/crosslandwa",
   "license": "ISC",
   "dependencies": {
+    "csvjsified": "^1.0.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jasmine": "^2.9.1",

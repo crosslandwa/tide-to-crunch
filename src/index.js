@@ -1,17 +1,9 @@
 const fs = require('fs')
+const { fromFilePath } = require('csvjsified')
 const toPence = pounds => Math.round(pounds * 100)
 const toPounds = pence => pence / 100
 
-function convertToCrunchJson(csvString, finalBalance = 0) {
-  const csvLines = csvString.split('\n')
-  const tideKeys = parseCsvLine(csvLines[0])
-  const dataRows = csvLines.slice(1).map(parseCsvLine).filter(line => line.length)
-
-  const tideJson = dataRows.map(row => row.reduce((acc, it, index) => {
-    acc[tideKeys[index]] = it
-    return acc
-  }, {}))
-
+function convertToCrunchJson(tideJson, finalBalance = 0) {
   return addBalance(
     tideJson.map(tideRow => ({
       Amount: parseFloat(parseFloat(tideRow.Amount).toFixed(2)),
@@ -30,19 +22,7 @@ function addBalance (payments, finalBalance) {
   return payments.map((payment, index) => Object.assign({}, payment, { Balance: toPounds(balances[index]) }))
 }
 
-function parseCsvLine (raw) {
-  return raw.trim().length === 0
-    ? []
-    : raw.split(',').map(key => key.trim().replace(/"/g, ''))
-}
-
 const toDDMMYYYY = date => `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
-
-function readFileContentAsString(filename) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(filename, (err, data) => err ? reject(err) : resolve(data.toString()))
-  })
-}
 
 function jsonToCsv(transactions) {
   const columns = ['Date', 'Transaction description', 'Amount', 'Balance']
@@ -61,7 +41,7 @@ const writeToFile = outputFilename => data => new Promise(
 
 module.exports = {
   convertToCrunchJson,
-  tideToCrunch: (csvPath, finalBalance) => readFileContentAsString(csvPath)
+  tideToCrunch: (csvPath, finalBalance) => fromFilePath(csvPath)
     .then(csv => convertToCrunchJson(csv, finalBalance))
     .then(jsonToCsv),
   writeToFile
