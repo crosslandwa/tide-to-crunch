@@ -55,10 +55,14 @@ function jsonToCsv(transactions) {
 
 const printCsvLine = data => `"${data.join('","')}"`
 
+const writeToFile = outputFilename => data => new Promise(
+  (reject, resolve) => fs.writeFile(outputFilename, data, err => err ? reject(err) : resolve(data))
+)
+
 module.exports = {
   convertToCrunchJson,
   tideToCrunch: (csvPath, finalBalance) => readFileContentAsString(csvPath)
     .then(csv => convertToCrunchJson(csv, finalBalance))
-    .then(jsonToCsv)
-
+    .then(jsonToCsv),
+  writeToFile
 }
