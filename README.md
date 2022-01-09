@@ -13,6 +13,8 @@ npm install
 FILE=path/to/tide.csv BALANCE=1234.56 npm start
 ```
 
+_Note that the supplied `BALANCE` can include commas, eg 10,234.56_
+
 This will print (Crunch friendly) CSV formatted text to the console, e.g.
 ```
 "Date","Transaction description","Amount","Balance"
