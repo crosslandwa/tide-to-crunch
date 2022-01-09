@@ -1,7 +1,11 @@
 const fs = require('fs')
 const { fromFilePath } = require('csvjsified')
-const toPence = pounds => Math.round(pounds * 100)
-const toPounds = pence => pence / 100
+
+function toNDecimalPlaces (n) {
+  return x => Number(Math.round(x + `e${n}`) + `e-${n}`)
+}
+
+const to2DP = toNDecimalPlaces(2)
 
 function convertToCrunchJson (tideJson, finalBalance = 0) {
   return addBalance(
@@ -20,10 +24,14 @@ const sortTransactionsMostRecentFirst = tideJson => [...tideJson].sort(
 
 function addBalance (payments, finalBalance) {
   const balances = payments.reduce(
-    (acc, payment) => acc.concat(acc.slice(-1) - toPence(payment.Amount)),
-    [toPence(finalBalance)]
+    (acc, payment) => [...acc, to2DP(lastItemInArray(acc) - payment.Amount)],
+    [to2DP(finalBalance)]
   )
-  return payments.map((payment, index) => Object.assign({}, payment, { Balance: toPounds(balances[index]) }))
+  return payments.map((payment, index) => Object.assign({}, payment, { Balance: balances[index] }))
+}
+
+function lastItemInArray (array) {
+  return array.slice(-1)[0]
 }
 
 const toDDMMYYYY = date => `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
