@@ -18,9 +18,11 @@ function convertToCrunchJson (tideJson, finalBalance = 0) {
   )
 }
 
-const sortTransactionsMostRecentFirst = tideJson => [...tideJson].sort(
-  (a, b) => (a.Timestamp > b.Timestamp) ? -1 : ((b.Timestamp > a.Timestamp) ? 1 : 0)
-)
+function sortTransactionsMostRecentFirst (tideJson) {
+  return [...tideJson].sort(
+    (a, b) => (a.Timestamp > b.Timestamp) ? -1 : ((b.Timestamp > a.Timestamp) ? 1 : 0)
+  )
+}
 
 function addBalance (payments, finalBalance) {
   const balances = payments.reduce(
@@ -34,7 +36,9 @@ function lastItemInArray (array) {
   return array.slice(-1)[0]
 }
 
-const toDDMMYYYY = date => `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+function toDDMMYYYY (date) {
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+}
 
 function jsonToCsv (transactions) {
   const columns = ['Date', 'Transaction description', 'Amount', 'Balance']
@@ -45,11 +49,15 @@ function jsonToCsv (transactions) {
   ).join('\n')
 }
 
-const printCsvLine = data => `"${data.join('","')}"`
+function printCsvLine (data) {
+  return `"${data.join('","')}"`
+}
 
-const writeToFile = outputFilename => data => new Promise(
-  (resolve, reject) => fs.writeFile(outputFilename, data, err => err ? reject(err) : resolve(data))
-)
+function writeToFile (outputFilename) {
+  return data => new Promise(
+    (resolve, reject) => fs.writeFile(outputFilename, data, err => err ? reject(err) : resolve(data))
+  )
+}
 
 module.exports = {
   tideToCrunch: (csvPath, finalBalance) => fromFilePath(csvPath)
