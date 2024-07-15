@@ -52,7 +52,6 @@ const writeToFile = outputFilename => data => new Promise(
 )
 
 module.exports = {
-  convertToCrunchJson,
   tideToCrunch: (csvPath, finalBalance) => fromFilePath(csvPath)
     .then(csv => convertToCrunchJson(csv, finalBalance))
     .then(jsonToCsv),
