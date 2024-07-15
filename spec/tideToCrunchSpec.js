@@ -35,7 +35,7 @@ describe('tide-to-crunch', () => {
   })
 
   it('plucks "Amount" values from the Tide CSV and converts them to 2d.p. floats', async () => {
-    const inputCSV = '"Amount"\n"123.00"\n"321.50"'
+    const inputCSV = '"Amount"\n"123.00"\n"321.50"\n"-3,000.00"'
     writeStubFile(inputCSV)
 
     const outputCSV = await tideToCrunch(STUB_FILEPATH, 1000)
@@ -43,6 +43,7 @@ describe('tide-to-crunch', () => {
 
     expect(outputCSVRows[1]).toContain('"123"')
     expect(outputCSVRows[2]).toContain('"321.5"')
+    expect(outputCSVRows[3]).toContain('"-3000"')
   })
 
   it('sorts transactions by date order, most recent first', async () => {

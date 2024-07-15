@@ -1,21 +1,25 @@
 const fs = require('fs')
 const { fromFilePath } = require('csvjsified')
-
-function toNDecimalPlaces (n) {
-  return x => Number(Math.round(x + `e${n}`) + `e-${n}`)
-}
-
-const to2DP = toNDecimalPlaces(2)
+const { to2DP } = require('./toNDecimalPlaces.js')
 
 function convertToCrunchJson (tideJson, finalBalance = 0) {
-  return addBalance(
-    sortTransactionsMostRecentFirst(tideJson).map(tideRow => ({
-      Amount: parseFloat(parseFloat(tideRow.Amount).toFixed(2)),
-      Date: toDDMMYYYY(new Date(tideRow.Date)),
-      'Transaction description': tideRow['Transaction description']
-    })),
-    parseFloat(finalBalance)
-  )
+  const sortedTransactions = sortTransactionsMostRecentFirst(tideJson)
+
+  const parsedTransactions = sortedTransactions.map(tideRow => ({
+    Amount: parseAmount(tideRow.Amount),
+    Date: toDDMMYYYY(new Date(tideRow.Date)),
+    'Transaction description': tideRow['Transaction description']
+  }))
+
+  return addBalance(parsedTransactions, parseFloat(finalBalance))
+}
+
+function parseAmount (amount) {
+  if (amount === undefined || amount === null) {
+    return 0
+  }
+  const amountWithoutCommas = amount.replaceAll(',', '')
+  return parseFloat(parseFloat(amountWithoutCommas).toFixed(2))
 }
 
 function sortTransactionsMostRecentFirst (tideJson) {
