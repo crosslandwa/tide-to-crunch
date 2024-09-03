@@ -1,6 +1,6 @@
 # tide-to-crunch
 
-Take a CSV exported from Tide and convert it to a CSV suitable for import into Crunch
+Convert a CSV exported from Tide to a CSV suitable for import into Crunch
 
 ## Usage
 
