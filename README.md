@@ -1,6 +1,6 @@
 # tide-to-crunch
 
-Take a CSV exported from Tide and convert it to a CSV suitable for import into Crunch
+Convert a CSV exported from Tide to a CSV suitable for import into Crunch
 
 ## Usage
 
@@ -15,7 +15,7 @@ FILE=path/to/tide.csv BALANCE=1234.56 npm start
 
 _Note that the supplied `BALANCE` can include commas, eg 10,234.56_
 
-This will print (Crunch friendly) CSV formatted text to the console, e.g.
+This will print (Crunch friendly) CSV formatted text to the console and write a new file to `<PATH_TO_ORIGINAL_FILE>-crunched.csv`, e.g.
 ```
 "Date","Transaction description","Amount","Balance"
 "19/10/2017","ref: WITHDRAWN 001","-1000","1234.56"
