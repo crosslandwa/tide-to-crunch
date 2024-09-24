@@ -6,7 +6,9 @@ function convertToCrunchJson (tideJson, finalBalance = 0) {
   const sortedTransactions = sortTransactionsMostRecentFirst(tideJson)
 
   const parsedTransactions = sortedTransactions.map(tideRow => ({
-    Amount: parseAmount(tideRow.Amount),
+    Amount: tideRow['Paid in']
+      ? parseAmount(tideRow['Paid in'])
+      : -1 * parseAmount(tideRow['Paid out']),
     Date: toDDMMYYYY(new Date(tideRow.Date)),
     'Transaction description': tideRow['Transaction description']
   }))

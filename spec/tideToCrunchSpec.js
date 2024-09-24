@@ -34,8 +34,8 @@ describe('tide-to-crunch', () => {
     expect(outputCSVRows[2]).toContain('"ref 2"')
   })
 
-  it('plucks "Amount" values from the Tide CSV and converts them to 2d.p. floats', async () => {
-    const inputCSV = '"Amount"\n"123.00"\n"321.50"\n"-3,000.00"'
+  it('plucks deposits from the "Paid in" field and withdrawals from the "Paid out" field of the Tide CSV and converts them to 2d.p. floats', async () => {
+    const inputCSV = '"Paid in","Paid out"\n"123.00",\n"321.50",\n,"3,000.00"'
     writeStubFile(inputCSV)
 
     const outputCSV = await tideToCrunch(STUB_FILEPATH, 1000)
@@ -47,7 +47,7 @@ describe('tide-to-crunch', () => {
   })
 
   it('sorts transactions by date order, most recent first', async () => {
-    const inputCSV = '"Amount","Timestamp"\n"3.00","2019-02-01 08:00:40"\n"1.00","2019-02-11 21:47:37"\n"2.00","2019-02-05 10:59:55"'
+    const inputCSV = '"Paid in","Timestamp"\n"3.00","2019-02-01 08:00:40"\n"1.00","2019-02-11 21:47:37"\n"2.00","2019-02-05 10:59:55"'
     writeStubFile(inputCSV)
 
     const outputCSV = await tideToCrunch(STUB_FILEPATH, 1000)
@@ -59,7 +59,7 @@ describe('tide-to-crunch', () => {
   })
 
   it('takes a final balance and calculates the balance after each transaction', async () => {
-    const inputCSV = '"Amount"\n"500.00"\n"-200.00"\n"1000.00'
+    const inputCSV = '"Paid in","Paid out"\n"500.00",\n,"200.00"\n"1000.00",'
     writeStubFile(inputCSV)
 
     const outputCSV = await tideToCrunch(STUB_FILEPATH, 10000)
