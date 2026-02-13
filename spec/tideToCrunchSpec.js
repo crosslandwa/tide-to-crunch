@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const STUB_FILEPATH = `${__dirname}/support/stub.csv`
 
-function writeStubFile (data) {
+function writeStubFile(data) {
   fs.writeFileSync(STUB_FILEPATH, data)
 }
 
@@ -47,7 +47,8 @@ describe('tide-to-crunch', () => {
   })
 
   it('sorts transactions by date order, most recent first', async () => {
-    const inputCSV = '"Paid in","Timestamp"\n"3.00","2019-02-01 08:00:40"\n"1.00","2019-02-11 21:47:37"\n"2.00","2019-02-05 10:59:55"'
+    const inputCSV =
+      '"Paid in","Timestamp"\n"3.00","2019-02-01 08:00:40"\n"1.00","2019-02-11 21:47:37"\n"2.00","2019-02-05 10:59:55"'
     writeStubFile(inputCSV)
 
     const outputCSV = await tideToCrunch(STUB_FILEPATH, 1000)

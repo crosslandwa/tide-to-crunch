@@ -11,13 +11,12 @@
   "author": "https://github.com/crosslandwa",
   "license": "ISC",
   "dependencies": {
-    "csvjsified": "^1.0.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jasmine": "^2.9.1",
-    "eslint-plugin-node": "^5.2.0",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "jasmine": "^2.8.0"
+    "csvjsified": "^1.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.0",
+    "globals": "^17.3.0",
+    "jasmine": "^6.0.0"
   }
 }
